@@ -69,6 +69,8 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     # print(model.layers[1].name)
     model2 = keras.models.Model(inputs=model.input, outputs=model.layers[1].output)
     test_ds = np.concatenate(list(validation_data.take(10).map(lambda x, y : x))) # get five batches of images and convert to numpy array
+    print(validation_data.take(10))
+    print(test_ds.shape)
     features = model2(test_ds)
     labels = np.argmax(model(test_ds), axis=-1)
     tsne = TSNE(n_components=2).fit_transform(features)
