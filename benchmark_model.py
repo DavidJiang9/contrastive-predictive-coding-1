@@ -67,6 +67,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     from keras.utils import plot_model 
     plot_model(model, to_file='model.png')
     x, y = validation_data.mnist_handler.get_batch('valid', 100, image_size, color, True)
+    print(model.input.shape)
     # print(x.shape) (100, 64, 64, 3)
     # print(y.shape) (100,)
     model2 = keras.models.Model(inputs=model.input, outputs=model.layers[1].output)
