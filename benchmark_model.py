@@ -18,17 +18,18 @@ def build_model(encoder_path, image_shape, learning_rate):
 
     # Define the classifier
     x_input = keras.layers.Input(image_shape)
-    print('input shape', x_input.shape)
-    x = encoder(x_input)
-    print('encoder shape', x.shape)
-    x = keras.layers.Dense(units=128, activation='linear')(x)
-    x = keras.layers.BatchNormalization()(x)
-    x = keras.layers.LeakyReLU()(x)
-    x = keras.layers.Dense(units=10, activation='softmax')(x)
+    # print('input shape', x_input.shape)
+    x1 = encoder(x_input)
+    
+    # print('encoder shape', x.shape)
+    x2 = keras.layers.Dense(units=128, activation='linear')(x1)
+    x2 = keras.layers.BatchNormalization()(x2)
+    x2 = keras.layers.LeakyReLU()(x2)
+    x2 = keras.layers.Dense(units=10, activation='softmax')(x2)
 
     # Model
-    model = keras.models.Model(inputs=x_input, outputs=x)
-
+    model = keras.models.Model(inputs=x_input, outputs=x2)
+    model2 = keras.models.Model(inputs=x_input, outputs=x1)
     # Compile model
     model.compile(
         optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
@@ -38,8 +39,8 @@ def build_model(encoder_path, image_shape, learning_rate):
     
 
     model.summary()
-
-    return model
+    model2.summary()
+    return model, model2
 
 
 def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image_size=28, color=False):
@@ -50,7 +51,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     validation_data = MnistGenerator(batch_size, subset='valid', image_size=image_size, color=color, rescale=True)
 
     # Prepares the model
-    model = build_model(encoder_path, image_shape=(image_size, image_size, 3), learning_rate=lr)
+    model, model2 = build_model(encoder_path, image_shape=(image_size, image_size, 3), learning_rate=lr)
 
     # Callbacks
     callbacks = [keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=1/3, patience=2, min_lr=1e-4)]
@@ -72,7 +73,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
 
     # print(x.shape) (100, 64, 64, 3)
     # print(y.shape) (100,)
-    model2 = keras.models.Model(inputs=keras.layers.Input(image_shape), outputs=model.layers[1].output)
+    # model2 = keras.models.Model(inputs=keras.layers.Input((image_size, image_size, 3)), outputs=model.layers[1].output)
 
     features = model2(x)
     labels = np.argmax(model(x), axis=-1)
