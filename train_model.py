@@ -153,8 +153,22 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
         verbose=1,
         callbacks=callbacks
     )
-    print(history)
-    print(history.history)
+    #  "Accuracy"
+    plt.plot(history.history['binary_accuracy'])
+    plt.plot(history.history['val_binary_accuracy'])
+    plt.title('Binary Classification Accuracy')
+    plt.ylabel('Accuracy')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'validation'], loc='upper left')
+    plt.savefig('./acc.png')
+    # "Loss"
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('Binary Classification Loss')
+    plt.ylabel('Loss')
+    plt.xlabel('Epoch')
+    plt.legend(['train', 'validation'], loc='upper left')
+    plt.savefig('./loss.png')
 
     # Saves the model
     # Remember to add custom_objects={'CPCLayer': CPCLayer} to load_model when loading from disk
