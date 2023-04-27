@@ -74,6 +74,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     for i in range(10):
         for j in range(20):
             sets.append(i)
+    print(sets)
     x, y = validation_data.mnist_handler.get_batch_by_labels('valid', sets, image_size, color, True)
 
     # print(x.shape) (100, 64, 64, 3)
@@ -97,8 +98,8 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     ty = scale_to_01_range(ty)
 
     fig = plt.figure()
-    for i in range(tx.shape[0]):
-        plt.scatter(tx[i], ty[i],color=plt.cm.Set3(labels[i]))
+    # for i in range(tx.shape[0]):
+    #     plt.scatter(tx[i], ty[i],color=plt.cm.Set3(labels[i]))
     for i in range(tx.shape[0]):
         plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set3(labels[i]), 
                 fontdict={'weight': 'bold', 'size': 9})
