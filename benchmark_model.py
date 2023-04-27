@@ -69,7 +69,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     # Add t-SNE visualization
     from keras.utils import plot_model 
     plot_model(model, to_file='model.png')
-    x, y = validation_data.mnist_handler.get_batch('valid', 100, image_size, color, True)
+    x, y = validation_data.mnist_handler.get_batch('valid', 200, image_size, color, True)
 
     # print(x.shape) (100, 64, 64, 3)
     # print(y.shape) (100,)
@@ -97,9 +97,9 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
         plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set1(labels[i]), 
                 fontdict={'weight': 'bold', 'size': 9})
 
-    plt.legend(labels, loc='best')
-    plt.savefig('./tsne.jpg')
-    plt.show()
+    plt.legend([str(i+1) for i in range(9)], loc='best')
+    plt.savefig('./tsne.png')
+
     # Saves the model
     model.save(join(output_dir, 'supervised.h5'))
 
