@@ -9,7 +9,7 @@ from data_utils import SortedNumberGenerator
 from os.path import join, basename, dirname, exists
 import keras
 from keras import backend as K
-
+import matplotlib.pyplot as plt
 
 def network_encoder(x, code_size):
 
