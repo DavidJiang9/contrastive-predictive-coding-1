@@ -98,8 +98,8 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     ty = scale_to_01_range(ty)
 
     fig, ax = plt.subplots()
-    for i in range(tx.shape[0]):
-        ax.scatter(tx[i], ty[i],color=plt.cm.Set3(labels[i]),label=str(i+1))
+    for i in range(10):
+        ax.scatter(tx[labels==i], ty[labels==i],color=plt.cm.Set3(i),label=str(i+1))
     # for i in range(tx.shape[0]):
     #     plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set3(labels[i]), 
     #             fontdict={'weight': 'bold', 'size': 9})
