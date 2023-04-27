@@ -92,7 +92,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     ty = scale_to_01_range(ty)
 
     fig = plt.figure()
-
+    plt.scatter(tx,ty,color=plt.cm.Set1(labels[i]))
     for i in range(tx.shape[0]):
         plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set1(labels[i]), 
                 fontdict={'weight': 'bold', 'size': 9})
@@ -108,7 +108,7 @@ if __name__ == "__main__":
 
     benchmark_model(
         encoder_path='models/64x64/encoder.h5',
-        epochs=1,
+        epochs=0,
         batch_size=64,
         output_dir='models/64x64',
         lr=1e-3,
