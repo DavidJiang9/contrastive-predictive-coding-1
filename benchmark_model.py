@@ -97,7 +97,8 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
         plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set1(labels[i]), 
                 fontdict={'weight': 'bold', 'size': 9})
 
-
+    plt.legend(labels, loc='best')
+    plt.savefig('./tsne.jpg')
     plt.show()
     # Saves the model
     model.save(join(output_dir, 'supervised.h5'))
