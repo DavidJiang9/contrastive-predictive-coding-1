@@ -33,27 +33,7 @@ def build_model(encoder_path, image_shape, learning_rate):
         loss='categorical_crossentropy',
         metrics=['categorical_accuracy']
     )
-    # Add t-SNE visualization
-    print('*'*60)
-    print(model.layers)
-    print(model.layers[2].name)
-    # model2 = tf.keras.Model(inputs=model.input, outputs=model.layers[-2].output)
-    # test_ds = np.concatenate(list(train_ds.take(5).map(lambda x, y : x))) # get five batches of images and convert to numpy array
-    # features = model2(test_ds)
-    # labels = np.argmax(model(test_ds), axis=-1)
-    # tsne = TSNE(n_components=2).fit_transform(features)
-
-    # def scale_to_01_range(x):
-
-    #     value_range = (np.max(x) - np.min(x))
-    #     starts_from_zero = x - np.min(x)
-    #     return starts_from_zero / value_range
-
-    # tx = tsne[:, 0]
-    # ty = tsne[:, 1]
-
-    # tx = scale_to_01_range(tx)
-    # ty = scale_to_01_range(ty)
+    
 
     model.summary()
 
@@ -83,7 +63,27 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
         verbose=1,
         callbacks=callbacks
     )
+    # Add t-SNE visualization
+    # print('*'*60)
+    # print(model.layers)
+    # print(model.layers[1].name)
+    model2 = tf.keras.Model(inputs=model.input, outputs=model.layers[1].output)
+    test_ds = np.concatenate(list(validation_data.take(10).map(lambda x, y : x))) # get five batches of images and convert to numpy array
+    features = model2(test_ds)
+    labels = np.argmax(model(test_ds), axis=-1)
+    tsne = TSNE(n_components=2).fit_transform(features)
 
+    def scale_to_01_range(x):
+
+        value_range = (np.max(x) - np.min(x))
+        starts_from_zero = x - np.min(x)
+        return starts_from_zero / value_range
+
+    tx = tsne[:, 0]
+    ty = tsne[:, 1]
+
+    tx = scale_to_01_range(tx)
+    ty = scale_to_01_range(ty)
     # Saves the model
     model.save(join(output_dir, 'supervised.h5'))
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     benchmark_model(
         encoder_path='models/64x64/encoder.h5',
-        epochs=15,
+        epochs=1,
         batch_size=64,
         output_dir='models/64x64',
         lr=1e-3,
