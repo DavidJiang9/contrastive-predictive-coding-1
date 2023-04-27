@@ -64,9 +64,8 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
         callbacks=callbacks
     )
     # Add t-SNE visualization
-    # print('*'*60)
-    # print(model.layers)
-    # print(model.layers[1].name)
+    from keras.utils import plot_model 
+    plot_model(model, to_file='model.png')
     x, y = validation_data.mnist_handler.get_batch('valid', 100, image_size, color, True)
     # print(x.shape) (100, 64, 64, 3)
     # print(y.shape) (100,)
@@ -95,7 +94,7 @@ if __name__ == "__main__":
 
     benchmark_model(
         encoder_path='models/64x64/encoder.h5',
-        epochs=1,
+        epochs=0,
         batch_size=64,
         output_dir='models/64x64',
         lr=1e-3,
