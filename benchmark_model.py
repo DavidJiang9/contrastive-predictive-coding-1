@@ -3,7 +3,8 @@
 from data_utils import MnistGenerator
 from os.path import join, basename, dirname, exists
 import keras
-
+import matplotlib.pyplot as plt
+from sklearn.manifold import TSNE
 
 def build_model(encoder_path, image_shape, learning_rate):
 
@@ -33,14 +34,27 @@ def build_model(encoder_path, image_shape, learning_rate):
         metrics=['categorical_accuracy']
     )
     # Add t-SNE visualization
-    def plot_tsne(model, X):
-        embeddings = model.predict(X)
-        tsne = TSNE(n_components=2, perplexity=30, verbose=1)
-        X_tsne = tsne.fit_transform(embeddings)
-        plt.scatter(X_tsne[:, 0], X_tsne[:, 1])
-        plt.show()
-        
-    model.plot_tsne = plot_tsne
+    print('*'*60)
+    print(model.layers)
+    print(model.layers[2])
+    # model2 = tf.keras.Model(inputs=model.input, outputs=model.layers[-2].output)
+    # test_ds = np.concatenate(list(train_ds.take(5).map(lambda x, y : x))) # get five batches of images and convert to numpy array
+    # features = model2(test_ds)
+    # labels = np.argmax(model(test_ds), axis=-1)
+    # tsne = TSNE(n_components=2).fit_transform(features)
+
+    # def scale_to_01_range(x):
+
+    #     value_range = (np.max(x) - np.min(x))
+    #     starts_from_zero = x - np.min(x)
+    #     return starts_from_zero / value_range
+
+    # tx = tsne[:, 0]
+    # ty = tsne[:, 1]
+
+    # tx = scale_to_01_range(tx)
+    # ty = scale_to_01_range(ty)
+
     model.summary()
 
     return model
