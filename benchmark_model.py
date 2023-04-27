@@ -68,14 +68,12 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     # print(model.layers)
     # print(model.layers[1].name)
     x, y = validation_data.mnist_handler.get_batch('valid', 100, image_size, color, True)
-    print(x.shape)
-    print(y.shape)
+    # print(x.shape) (100, 64, 64, 3)
+    # print(y.shape) (100,)
     model2 = keras.models.Model(inputs=model.input, outputs=model.layers[1].output)
-    test_ds = np.concatenate(list(validation_data.take(10).map(lambda x, y : x))) # get five batches of images and convert to numpy array
-    print(validation_data.take(10))
-    print(test_ds.shape)
-    features = model2(test_ds)
-    labels = np.argmax(model(test_ds), axis=-1)
+
+    features = model2(x)
+    labels = np.argmax(model(x), axis=-1)
     tsne = TSNE(n_components=2).fit_transform(features)
 
     def scale_to_01_range(x):
