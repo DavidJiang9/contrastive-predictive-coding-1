@@ -29,7 +29,7 @@ def build_model(encoder_path, image_shape, learning_rate):
 
     # Compile model
     model.compile(
-        optimizer=keras.optimizers.Adam(lr=learning_rate),
+        optimizer=keras.optimizers.Adam(learning_rate=learning_rate),
         loss='categorical_crossentropy',
         metrics=['categorical_accuracy']
     )
@@ -54,7 +54,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     callbacks = [keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=1/3, patience=2, min_lr=1e-4)]
 
     # Trains the model
-    model.fit_generator(
+    model.fit(
         generator=train_data,
         steps_per_epoch=len(train_data),
         validation_data=validation_data,
@@ -95,7 +95,7 @@ if __name__ == "__main__":
 
     benchmark_model(
         encoder_path='models/64x64/encoder.h5',
-        epochs=0,
+        epochs=1,
         batch_size=64,
         output_dir='models/64x64',
         lr=1e-3,
