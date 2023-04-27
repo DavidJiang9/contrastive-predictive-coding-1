@@ -36,7 +36,7 @@ def build_model(encoder_path, image_shape, learning_rate):
     # Add t-SNE visualization
     print('*'*60)
     print(model.layers)
-    print(model.layers[2].weights)
+    print(model.layers[2].name)
     # model2 = tf.keras.Model(inputs=model.input, outputs=model.layers[-2].output)
     # test_ds = np.concatenate(list(train_ds.take(5).map(lambda x, y : x))) # get five batches of images and convert to numpy array
     # features = model2(test_ds)
