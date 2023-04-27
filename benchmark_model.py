@@ -18,7 +18,9 @@ def build_model(encoder_path, image_shape, learning_rate):
 
     # Define the classifier
     x_input = keras.layers.Input(image_shape)
+    print('input shape', x_input.shape)
     x = encoder(x_input)
+    print('encoder shape', x.shape)
     x = keras.layers.Dense(units=128, activation='linear')(x)
     x = keras.layers.BatchNormalization()(x)
     x = keras.layers.LeakyReLU()(x)
@@ -67,10 +69,10 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     from keras.utils import plot_model 
     plot_model(model, to_file='model.png')
     x, y = validation_data.mnist_handler.get_batch('valid', 100, image_size, color, True)
-    print(model.input.shape)
+
     # print(x.shape) (100, 64, 64, 3)
     # print(y.shape) (100,)
-    model2 = keras.models.Model(inputs=model.input, outputs=model.layers[1].output)
+    model2 = keras.models.Model(inputs=keras.layers.Input(image_shape), outputs=model.layers[1].output)
 
     features = model2(x)
     labels = np.argmax(model(x), axis=-1)
