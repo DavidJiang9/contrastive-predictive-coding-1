@@ -161,6 +161,7 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
     plt.xlabel('Epoch')
     plt.legend(['train', 'validation'], loc='upper left')
     plt.savefig('./acc.png')
+    plt.clf()
     # "Loss"
     plt.plot(history.history['loss'])
     plt.plot(history.history['val_loss'])
