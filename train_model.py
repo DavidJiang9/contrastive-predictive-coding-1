@@ -144,7 +144,7 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
     callbacks = [keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=1/3, patience=2, min_lr=1e-4)]
 
     # Trains the model
-    model.fit_generator(
+    history = model.fit_generator(
         generator=train_data,
         steps_per_epoch=len(train_data),
         validation_data=validation_data,
@@ -153,6 +153,8 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
         verbose=1,
         callbacks=callbacks
     )
+    print(history)
+    print(history.history)
 
     # Saves the model
     # Remember to add custom_objects={'CPCLayer': CPCLayer} to load_model when loading from disk
