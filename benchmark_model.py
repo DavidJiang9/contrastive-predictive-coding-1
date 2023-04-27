@@ -32,6 +32,15 @@ def build_model(encoder_path, image_shape, learning_rate):
         loss='categorical_crossentropy',
         metrics=['categorical_accuracy']
     )
+    # Add t-SNE visualization
+    def plot_tsne(model, X):
+        embeddings = model.predict(X)
+        tsne = TSNE(n_components=2, perplexity=30, verbose=1)
+        X_tsne = tsne.fit_transform(embeddings)
+        plt.scatter(X_tsne[:, 0], X_tsne[:, 1])
+        plt.show()
+        
+    model.plot_tsne = plot_tsne
     model.summary()
 
     return model
