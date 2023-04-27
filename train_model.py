@@ -168,7 +168,7 @@ def train_model(epochs, batch_size, output_dir, code_size, lr=1e-4, terms=4, pre
 if __name__ == "__main__":
 
     train_model(
-        epochs=15,
+        epochs=2,
         batch_size=32,
         output_dir='models/64x64',
         code_size=128,
