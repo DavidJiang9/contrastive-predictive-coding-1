@@ -97,14 +97,14 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     tx = scale_to_01_range(tx)
     ty = scale_to_01_range(ty)
 
-    fig = plt.figure()
+    fig, ax = plt.subplots()
     for i in range(tx.shape[0]):
-        plt.scatter(tx[i], ty[i],color=plt.cm.Set3(labels[i]))
-    for i in range(tx.shape[0]):
-        plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set3(labels[i]), 
-                fontdict={'weight': 'bold', 'size': 9})
+        ax.scatter(tx[i], ty[i],color=plt.cm.Set3(labels[i]),label=str(i+1))
+    # for i in range(tx.shape[0]):
+    #     plt.text(tx[i], ty[i], str(labels[i]), color=plt.cm.Set3(labels[i]), 
+    #             fontdict={'weight': 'bold', 'size': 9})
 
-    plt.legend([str(i+1) for i in range(9)])
+    ax.legend(loc ="best");
     plt.savefig('./tsne.png')
 
     # Saves the model
