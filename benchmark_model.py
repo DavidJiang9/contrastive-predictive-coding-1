@@ -115,7 +115,7 @@ if __name__ == "__main__":
 
     benchmark_model(
         encoder_path='models/64x64/encoder.h5',
-        epochs=0,
+        epochs=15,
         batch_size=64,
         output_dir='models/64x64',
         lr=1e-3,
