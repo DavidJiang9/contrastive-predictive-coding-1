@@ -17,7 +17,7 @@ class MnistHandler(object):
 
         # Download data if needed
         self.X_train, self.y_train, self.X_val, self.y_val, self.X_test, self.y_test = self.load_dataset()
-
+        print(len(self.X_train), len(self.X_val))
         # Load Lena image to memory
         self.lena = Image.open('resources/lena.jpg')
 
