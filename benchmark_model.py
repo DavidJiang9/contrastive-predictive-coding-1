@@ -54,7 +54,7 @@ def benchmark_model(encoder_path, epochs, batch_size, output_dir, lr=1e-4, image
     callbacks = [keras.callbacks.ReduceLROnPlateau(monitor='val_loss', factor=1/3, patience=2, min_lr=1e-4)]
 
     # Trains the model
-    model.fit(
+    model.fit_generator(
         generator=train_data,
         steps_per_epoch=len(train_data),
         validation_data=validation_data,
