@@ -5,7 +5,7 @@ from os.path import join, basename, dirname, exists
 import keras
 import matplotlib.pyplot as plt
 from sklearn.manifold import TSNE
-
+import numpy as np
 def build_model(encoder_path, image_shape, learning_rate):
 
     # Read the encoder
