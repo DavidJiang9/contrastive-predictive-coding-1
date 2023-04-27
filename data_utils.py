@@ -173,7 +173,7 @@ class MnistHandler(object):
 
         # Process batch
         batch = self.process_batch(batch, len(labels), image_size, color, rescale)
-
+        print(batch)
         return batch.astype('float32'), labels.astype('int32')
 
     def get_n_samples(self, subset):
